@@ -8,6 +8,14 @@ terraform {
       source  = "dmacvicar/libvirt"
       version = "~> 0.8.0"
     }
+    talos = {
+      source  = "siderolabs/talos"
+      version = "~> 0.7.0"
+    }
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 2.5"
+    }
   }
 }
 
@@ -23,4 +31,6 @@ module "kvm_cluster" {
   network_name       = var.network_name
   controlplane_count = var.controlplane_count
   worker_count       = var.worker_count
+  talos_version      = var.talos_version
+  talos_image_url    = var.talos_image_url
 }

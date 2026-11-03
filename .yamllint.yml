@@ -4,6 +4,9 @@ yaml-files:
   - '*.yml'
   - '.yamllint'
 
+ignore: |
+  infra/environments/local-kvm/talos/*.yaml
+
 rules:
   line-length:
     max: 140

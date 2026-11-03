@@ -18,13 +18,13 @@ variable "network_name" {
 
 variable "talos_version" {
   type        = string
-  default     = "v1.8.0"
+  default     = "v1.8.1"
   description = "Talos Linux release version"
 }
 
 variable "talos_image_url" {
   type        = string
-  default     = "https://factory.talos.dev/image/787b50bbd266e745672ab6443c748c5a2c4e33d2ff90eb01ff1a78c18712a488/v1.8.0/nocloud-amd64.raw.gz"
+  default     = "https://factory.talos.dev/image/613e1592b2da41ae5e265e8789429f22e121aab91cb4deb6bc3c0b6262961245/v1.8.1/nocloud-amd64.raw"
   description = "URL to the Talos Linux base disk image (nocloud-amd64)"
 }
 

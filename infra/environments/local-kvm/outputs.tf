@@ -27,3 +27,8 @@ output "kubernetes_api_endpoint" {
   description = "HA Kubernetes API endpoint using the Virtual IP"
   value       = "https://${var.controlplane_vip}:6443"
 }
+
+output "kubeconfig_path" {
+  description = "Path to the administrative kubeconfig file"
+  value       = local_file.kubeconfig.filename
+}

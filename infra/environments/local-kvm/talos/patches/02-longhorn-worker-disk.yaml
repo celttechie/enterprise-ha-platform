@@ -1,7 +1,0 @@
-# Talos patch to mount secondary raw virtual block device (/dev/vdb) on worker nodes
-# Dedicated storage volume for Longhorn 3-way distributed block replication
-machine:
-  disks:
-    - device: /dev/vdb
-      partitions:
-        - mountpoint: /var/lib/longhorn
