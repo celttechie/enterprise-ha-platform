@@ -1,0 +1,7 @@
+# Ignore generated cluster machine configs and secrets
+controlplane.yaml
+worker.yaml
+talosconfig
+secrets.yaml
+*.rendered.yaml
+kubeconfig

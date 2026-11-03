@@ -33,3 +33,21 @@ variable "worker_count" {
   default     = 3
   description = "Number of worker nodes for 3-way storage replication"
 }
+
+variable "controlplane_vip" {
+  type        = string
+  default     = "192.168.122.200"
+  description = "Virtual IP (VIP) for HA control plane floating address"
+}
+
+variable "talos_version" {
+  type        = string
+  default     = "v1.8.1"
+  description = "Talos Linux release version"
+}
+
+variable "talos_image_url" {
+  type        = string
+  default     = "https://factory.talos.dev/image/613e1592b2da41ae5e265e8789429f22e121aab91cb4deb6bc3c0b6262961245/v1.8.1/nocloud-amd64.raw"
+  description = "URL to the Talos Linux base disk image (nocloud-amd64)"
+}

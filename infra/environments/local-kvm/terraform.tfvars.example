@@ -7,3 +7,4 @@ storage_pool       = "default"
 network_name       = "default"
 controlplane_count = 3
 worker_count       = 3
+controlplane_vip   = "192.168.122.200"
