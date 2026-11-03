@@ -1,0 +1,9 @@
+# Example configuration for Local KVM Hypervisor
+# Copy to terraform.tfvars or pass via environment variables (TF_VAR_*)
+
+libvirt_uri        = "qemu:///system"  # Or "qemu+ssh://<REMOTE_USER>@<REMOTE_HOST>/system"
+cluster_name       = "enterprise-ha"
+storage_pool       = "default"
+network_name       = "default"
+controlplane_count = 3
+worker_count       = 3

@@ -1,0 +1,89 @@
+# Git & Environment Ignore Rules
+# ==============================================================================
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Python Artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+
+# OpenTofu / Terraform State & Locks
+**/.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+.tofurc
+tofu.rc
+
+# Credentials, Keys, & Secrets (Strict Zero-Leakage)
+*.pem
+*.key
+*.pub
+*id_rsa*
+*id_ed25519*
+*.p12
+*.crt
+*.csr
+*.cer
+kubeconfig*
+*.kubeconfig
+credentials
+credentials.json
+service-account*.json
+*.token
+.env
+.env.*
+!.env.example
+
+# Kubernetes / Helm Cache
+.helm/
+*.tgz
+
+# Test & Demonstration Output Artifacts
+/reports/
+/dist/
+*.log
+/recordings/*.mp4
+/recordings/*.raw

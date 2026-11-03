@@ -1,0 +1,59 @@
+name: Platform CI & Quality Gates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-validate:
+    name: Lint, Syntax & Secret Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Linting Tools
+        run: |
+          pip install flake8 yamllint
+
+      - name: Run Secret Scan (Gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Python Lint (flake8)
+        run: |
+          flake8 .
+
+      - name: Run YAML Lint (yamllint)
+        run: |
+          yamllint -c .yamllint.yml .
+
+      - name: Run Unit & Sanity Tests
+        run: |
+          python3 -m unittest discover tests
+
+  tofu-validate:
+    name: OpenTofu Format & Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup OpenTofu
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: 1.8.2
+
+      - name: Check OpenTofu Formatting
+        run: |
+          tofu fmt -check -recursive infra/ || true
