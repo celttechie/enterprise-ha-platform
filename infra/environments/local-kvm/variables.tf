@@ -33,3 +33,9 @@ variable "worker_count" {
   default     = 3
   description = "Number of worker nodes for 3-way storage replication"
 }
+
+variable "controlplane_vip" {
+  type        = string
+  default     = "192.168.122.200"
+  description = "Virtual IP (VIP) for HA control plane floating address"
+}

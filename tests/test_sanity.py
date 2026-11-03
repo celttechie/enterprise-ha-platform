@@ -28,6 +28,7 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "workloads",
             "docs",
             "docs/adr",
+            "docs/milestones",
             "docs/security",
             "docs/operations",
             "scripts",
@@ -53,6 +54,9 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "docs/adr/0002-decoupled-monorepo-tiering.md",
             "docs/adr/0003-multi-cloud-abstraction-and-spot-cost-guardrails.md",
             "docs/adr/0004-event-driven-autoscaling-with-keda.md",
+            "docs/adr/0005-environment-neutrality-and-variable-driven-infrastructure.md",
+            "docs/milestones/milestone-1.1-kvm-cluster-module.md",
+            "docs/milestones/milestone-1.2-talos-ha-vip.md",
             "docs/security/security-model.md",
             "docs/operations/demonstration-runbook.md",
             "infra/modules/kvm-cluster/main.tf",
@@ -62,6 +66,11 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "infra/environments/local-kvm/variables.tf",
             "infra/environments/local-kvm/outputs.tf",
             "infra/environments/local-kvm/terraform.tfvars.example",
+            "infra/environments/local-kvm/talos/.gitignore",
+            "infra/environments/local-kvm/talos/patches/00-controlplane-vip.yaml.tpl",
+            "infra/environments/local-kvm/talos/patches/01-cilium-cni.yaml",
+            "infra/environments/local-kvm/talos/patches/02-longhorn-worker-disk.yaml",
+            "infra/environments/local-kvm/talos/scripts/generate-ha-configs.sh",
         ]
         for f in required_files:
             full_path = os.path.join(REPO_ROOT, f)

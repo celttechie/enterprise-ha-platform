@@ -1,0 +1,7 @@
+# Talos patch to disable default Flannel CNI and kube-proxy for Cilium eBPF
+cluster:
+  network:
+    cni:
+      name: none
+  proxy:
+    disabled: true
