@@ -57,8 +57,25 @@ data "talos_machine_configuration" "worker" {
             name = "none"
           }
         }
+        proxy = {
+          disabled = true
+        }
       }
       machine = {
+        kubelet = {
+          extraMounts = [
+            {
+              destination = "/var/lib/longhorn"
+              type        = "bind"
+              source      = "/var/lib/longhorn"
+              options = [
+                "bind",
+                "rshared",
+                "rw"
+              ]
+            }
+          ]
+        }
         disks = [
           {
             device = "/dev/vdb"
