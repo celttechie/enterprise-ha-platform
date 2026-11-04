@@ -64,6 +64,7 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "docs/milestones/milestone-1.3-cilium-and-longhorn-storage.md",
             "docs/milestones/milestone-1.4-control-plane-quorum-chaos.md",
             "docs/adr/0006-native-talos-configuration-via-opentofu-provider.md",
+            "docs/adr/0007-control-plane-load-balancing-and-fast-vip-failover.md",
             "docs/security/security-model.md",
             "docs/operations/demonstration-runbook.md",
             "infra/modules/kvm-cluster/main.tf",
