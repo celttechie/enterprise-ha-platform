@@ -21,9 +21,12 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "infra/environments/aws",
             "infra/environments/gcp",
             "platform",
+            "platform/cni",
+            "platform/cni/cilium",
             "platform/ingress",
             "platform/autoscaling",
             "platform/storage",
+            "platform/storage/longhorn",
             "platform/observability",
             "workloads",
             "docs",
@@ -57,6 +60,7 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "docs/adr/0005-environment-neutrality-and-variable-driven-infrastructure.md",
             "docs/milestones/milestone-1.1-kvm-cluster-module.md",
             "docs/milestones/milestone-1.2-talos-ha-vip.md",
+            "docs/milestones/milestone-1.3-cilium-and-longhorn-storage.md",
             "docs/adr/0006-native-talos-configuration-via-opentofu-provider.md",
             "docs/security/security-model.md",
             "docs/operations/demonstration-runbook.md",
@@ -69,6 +73,9 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "infra/environments/local-kvm/outputs.tf",
             "infra/environments/local-kvm/terraform.tfvars.example",
             "infra/environments/local-kvm/talos/.gitignore",
+            "platform/cni/cilium/values.yaml",
+            "platform/storage/longhorn/namespace.yaml",
+            "platform/storage/longhorn/values.yaml",
         ]
         for f in required_files:
             full_path = os.path.join(REPO_ROOT, f)

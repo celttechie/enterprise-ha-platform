@@ -106,6 +106,24 @@ deploy: ## Deploy infrastructure & platform for TARGET (e.g. make deploy TARGET=
 	fi
 	@cd infra/environments/$(TARGET) && tofu init && tofu apply -auto-approve
 
+.PHONY: deploy-platform
+deploy-platform: ## Deploy Cilium eBPF CNI and Longhorn 3x Storage to TARGET cluster
+	@echo "🌐 Deploying Platform Tier (Cilium eBPF + Longhorn Storage) for $(TARGET)..."
+	@export KUBECONFIG="$(CURDIR)/infra/environments/$(TARGET)/kubeconfig"; \
+	helm repo add cilium https://helm.cilium.io/ --force-update; \
+	helm repo add longhorn https://charts.longhorn.io --force-update; \
+	helm upgrade --install cilium cilium/cilium \
+		--version 1.16.3 \
+		--namespace kube-system \
+		-f platform/cni/cilium/values.yaml \
+		--wait --timeout 5m; \
+	kubectl apply -f platform/storage/longhorn/namespace.yaml; \
+	helm upgrade --install longhorn longhorn/longhorn \
+		--version 1.7.2 \
+		--namespace longhorn-system \
+		-f platform/storage/longhorn/values.yaml \
+		--wait --timeout 10m
+
 .PHONY: destroy
 destroy: ## Destroy infrastructure for TARGET (e.g. make destroy TARGET=aws|gcp|local-kvm)
 	@echo "🧹 Tearing down stack for environment: $(TARGET)..."

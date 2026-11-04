@@ -21,7 +21,7 @@ Demonstrate enterprise High Availability, event-driven horizontal scalability, a
 ### Phase 1: Local KVM High Availability ($0 Baseline)
 - [x] **M1.1**: Define OpenTofu module `infra/modules/kvm-cluster` (3 Control Plane + 3 Worker VMs on network bridge with secondary disks for Longhorn).
 - [x] **M1.2**: Implement virtual control plane floating IP (VIP failover and Talos HA configs).
-- [ ] **M1.3**: Deploy Longhorn Distributed Block Storage with 3x volume replication across virtual workers.
+- [x] **M1.3**: Deploy Longhorn Distributed Block Storage with 3x volume replication across virtual workers.
 - [ ] **M1.4**: Validate control plane quorum survival by terminating CP-1 during active API queries.
 
 ### Phase 2: Ephemeral AWS EKS Module with Cost Guardrails
