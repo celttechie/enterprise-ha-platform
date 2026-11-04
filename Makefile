@@ -132,11 +132,23 @@ destroy: ## Destroy infrastructure for TARGET (e.g. make destroy TARGET=aws|gcp|
 	fi
 	@cd infra/environments/$(TARGET) && tofu destroy -auto-approve || true
 
+.PHONY: chaos-cp
+chaos-cp: ## Execute Milestone 1.4 Control Plane HA Quorum & VIP Failover Chaos Drill
+	@echo "⚡ Executing Control Plane HA Quorum Chaos Drill..."
+	@bash workloads/chaos-drills/validate-cp-quorum-chaos.sh
+
+.PHONY: chaos-restore
+chaos-restore: ## Restore any powered-off or destroyed cluster nodes and verify 6/6 Ready + etcd quorum
+	@echo "🔄 Restoring cluster state after chaos testing..."
+	@bash workloads/chaos-drills/validate-cp-quorum-chaos.sh --restore
+
 .PHONY: demo
 demo: ## Run automated load generation and chaos resilience drill
 	@echo "🎯 Executing demonstration drill..."
 	@if [ -f "workloads/chaos-drills/run-drill.sh" ]; then \
 		bash workloads/chaos-drills/run-drill.sh; \
+	elif [ -f "workloads/chaos-drills/validate-cp-quorum-chaos.sh" ]; then \
+		bash workloads/chaos-drills/validate-cp-quorum-chaos.sh; \
 	else \
 		echo "ℹ️ No drill script found at workloads/chaos-drills/run-drill.sh"; \
 	fi
