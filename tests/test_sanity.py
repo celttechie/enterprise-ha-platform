@@ -29,6 +29,7 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "platform/storage/longhorn",
             "platform/observability",
             "workloads",
+            "workloads/chaos-drills",
             "docs",
             "docs/adr",
             "docs/milestones",
@@ -61,6 +62,7 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "docs/milestones/milestone-1.1-kvm-cluster-module.md",
             "docs/milestones/milestone-1.2-talos-ha-vip.md",
             "docs/milestones/milestone-1.3-cilium-and-longhorn-storage.md",
+            "docs/milestones/milestone-1.4-control-plane-quorum-chaos.md",
             "docs/adr/0006-native-talos-configuration-via-opentofu-provider.md",
             "docs/security/security-model.md",
             "docs/operations/demonstration-runbook.md",
@@ -76,6 +78,7 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "platform/cni/cilium/values.yaml",
             "platform/storage/longhorn/namespace.yaml",
             "platform/storage/longhorn/values.yaml",
+            "workloads/chaos-drills/validate-cp-quorum-chaos.sh",
         ]
         for f in required_files:
             full_path = os.path.join(REPO_ROOT, f)
