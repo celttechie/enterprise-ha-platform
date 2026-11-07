@@ -7,19 +7,37 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.50"
     }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "~> 4.0"
+    }
   }
 }
 
-variable "aws_region" {
-  type        = string
-  default     = "us-east-2"
-  description = "AWS target region"
+provider "aws" {
+  region = var.aws_region
+
+  default_tags {
+    tags = merge(
+      {
+        Project   = "enterprise-ha-platform"
+        ManagedBy = "OpenTofu"
+      },
+      var.tags
+    )
+  }
 }
 
-variable "environment" {
-  type        = string
-  default     = "ephemeral-demo"
-  description = "Deployment environment name"
-}
+# AWS EKS & Multi-AZ VPC Infrastructure Module
+module "aws_eks" {
+  source = "../../modules/aws-eks"
 
-# Module calls for VPC (single shared NAT) and EKS Spot NodeGroup will be populated here
+  cluster_name          = var.cluster_name
+  environment           = var.environment
+  aws_region            = var.aws_region
+  vpc_cidr              = var.vpc_cidr
+  kubernetes_version    = var.kubernetes_version
+  single_nat_gateway    = var.single_nat_gateway
+  enable_kms_encryption = var.enable_kms_encryption
+  tags                  = var.tags
+}
