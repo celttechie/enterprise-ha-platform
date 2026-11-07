@@ -1,0 +1,15 @@
+# Example OpenTofu Variables for AWS Ephemeral EKS Environment
+
+aws_region            = "us-east-2"
+environment           = "ephemeral-demo"
+cluster_name          = "enterprise-ha-eks"
+vpc_cidr              = "10.0.0.0/16"
+kubernetes_version    = "1.31"
+single_nat_gateway    = true
+enable_kms_encryption = true
+
+tags = {
+  Environment = "ephemeral-demo"
+  Owner       = "Platform-Engineering"
+  CostCenter  = "Engineering-Testbeds"
+}
