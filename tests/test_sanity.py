@@ -69,6 +69,7 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "docs/adr/0008-single-shared-nat-gateway-for-ephemeral-cloud-testbeds.md",
             "docs/milestones/milestone-2.1-aws-eks-module.md",
             "docs/milestones/milestone-2.2-aws-eks-spot-nodegroup.md",
+            "docs/milestones/milestone-2.3-aws-lbc-and-ebs-csi.md",
             "docs/security/security-model.md",
             "docs/operations/demonstration-runbook.md",
             "infra/modules/kvm-cluster/main.tf",
@@ -82,6 +83,8 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "infra/modules/aws-eks/eks.tf",
             "infra/modules/aws-eks/nodegroup.tf",
             "infra/modules/aws-eks/addons.tf",
+            "infra/modules/aws-eks/ebs_csi.tf",
+            "infra/modules/aws-eks/lbc_iam.tf",
             "infra/modules/aws-eks/outputs.tf",
             "infra/environments/local-kvm/main.tf",
             "infra/environments/local-kvm/talos.tf",
@@ -96,6 +99,8 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "platform/cni/cilium/values.yaml",
             "platform/storage/longhorn/namespace.yaml",
             "platform/storage/longhorn/values.yaml",
+            "platform/storage/ebs-csi/storageclass.yaml",
+            "platform/ingress/aws-lbc/values.yaml",
             "workloads/chaos-drills/validate-cp-quorum-chaos.sh",
         ]
         for f in required_files:
