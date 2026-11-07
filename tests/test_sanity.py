@@ -17,6 +17,7 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "infra",
             "infra/modules",
             "infra/modules/kvm-cluster",
+            "infra/modules/aws-eks",
             "infra/environments/local-kvm",
             "infra/environments/aws",
             "infra/environments/gcp",
@@ -65,17 +66,30 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "docs/milestones/milestone-1.4-control-plane-quorum-chaos.md",
             "docs/adr/0006-native-talos-configuration-via-opentofu-provider.md",
             "docs/adr/0007-control-plane-load-balancing-and-fast-vip-failover.md",
+            "docs/adr/0008-single-shared-nat-gateway-for-ephemeral-cloud-testbeds.md",
+            "docs/milestones/milestone-2.1-aws-eks-module.md",
             "docs/security/security-model.md",
             "docs/operations/demonstration-runbook.md",
             "infra/modules/kvm-cluster/main.tf",
             "infra/modules/kvm-cluster/variables.tf",
             "infra/modules/kvm-cluster/outputs.tf",
+            "infra/modules/aws-eks/variables.tf",
+            "infra/modules/aws-eks/vpc.tf",
+            "infra/modules/aws-eks/kms.tf",
+            "infra/modules/aws-eks/iam.tf",
+            "infra/modules/aws-eks/security_groups.tf",
+            "infra/modules/aws-eks/eks.tf",
+            "infra/modules/aws-eks/outputs.tf",
             "infra/environments/local-kvm/main.tf",
             "infra/environments/local-kvm/talos.tf",
             "infra/environments/local-kvm/variables.tf",
             "infra/environments/local-kvm/outputs.tf",
             "infra/environments/local-kvm/terraform.tfvars.example",
             "infra/environments/local-kvm/talos/.gitignore",
+            "infra/environments/aws/main.tf",
+            "infra/environments/aws/variables.tf",
+            "infra/environments/aws/outputs.tf",
+            "infra/environments/aws/terraform.tfvars.example",
             "platform/cni/cilium/values.yaml",
             "platform/storage/longhorn/namespace.yaml",
             "platform/storage/longhorn/values.yaml",
@@ -97,6 +111,16 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             self.skipTest("Neither tofu nor terraform is installed")
         cmd = "tofu" if shutil.which("tofu") else "terraform"
         env_dir = os.path.join(REPO_ROOT, "infra", "environments", "local-kvm")
+        init_res = subprocess.run([cmd, "init", "-backend=false"], cwd=env_dir, capture_output=True, text=True)
+        self.assertEqual(init_res.returncode, 0, f"{cmd} init failed:\n{init_res.stderr}\n{init_res.stdout}")
+        val_res = subprocess.run([cmd, "validate"], cwd=env_dir, capture_output=True, text=True)
+        self.assertEqual(val_res.returncode, 0, f"{cmd} validate failed:\n{val_res.stderr}\n{val_res.stdout}")
+
+    def test_aws_eks_opentofu_validation(self):
+        if not shutil.which("tofu") and not shutil.which("terraform"):
+            self.skipTest("Neither tofu nor terraform is installed")
+        cmd = "tofu" if shutil.which("tofu") else "terraform"
+        env_dir = os.path.join(REPO_ROOT, "infra", "environments", "aws")
         init_res = subprocess.run([cmd, "init", "-backend=false"], cwd=env_dir, capture_output=True, text=True)
         self.assertEqual(init_res.returncode, 0, f"{cmd} init failed:\n{init_res.stderr}\n{init_res.stdout}")
         val_res = subprocess.run([cmd, "validate"], cwd=env_dir, capture_output=True, text=True)

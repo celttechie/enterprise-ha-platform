@@ -25,7 +25,7 @@ Demonstrate enterprise High Availability, event-driven horizontal scalability, a
 - [x] **M1.4**: Validate control plane quorum survival by terminating CP-1 during active API queries.
 
 ### Phase 2: Ephemeral AWS EKS Module with Cost Guardrails
-- [ ] **M2.1**: Define OpenTofu module `infra/modules/aws-eks` (VPC with single shared NAT Gateway, EKS Cluster).
+- [x] **M2.1**: Define OpenTofu module `infra/modules/aws-eks` (Multi-AZ VPC with single shared NAT Gateway [ADR-0008], KMS envelope encryption, keyless SSM, and EKS Cluster).
 - [ ] **M2.2**: Configure Spot NodeGroup (`t3.medium` / `t4g.medium`) with AWS Pod Identity / IRSA.
 - [ ] **M2.3**: Deploy AWS Load Balancer Controller (ALB/NLB) and EBS CSI Driver.
 - [ ] **M2.4**: Implement automated teardown safeguards and AWS Budget alarms ($5.00 limit).
