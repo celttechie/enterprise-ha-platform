@@ -113,3 +113,22 @@ output "addon_pod_identity_agent_arn" {
   description = "ARN of the eks-pod-identity-agent addon"
   value       = try(aws_eks_addon.pod_identity_agent[0].arn, null)
 }
+
+# -----------------------------------------------------------------------------
+# Platform Storage & Ingress Outputs (Milestone 2.3)
+# -----------------------------------------------------------------------------
+
+output "ebs_csi_role_arn" {
+  description = "ARN of the IAM role for Amazon EBS CSI Driver"
+  value       = aws_iam_role.ebs_csi.arn
+}
+
+output "addon_ebs_csi_arn" {
+  description = "ARN of the aws-ebs-csi-driver addon"
+  value       = aws_eks_addon.ebs_csi.arn
+}
+
+output "lbc_role_arn" {
+  description = "ARN of the IAM role for AWS Load Balancer Controller"
+  value       = aws_iam_role.aws_lbc.arn
+}

@@ -107,22 +107,36 @@ deploy: ## Deploy infrastructure & platform for TARGET (e.g. make deploy TARGET=
 	@cd infra/environments/$(TARGET) && tofu init && tofu apply -auto-approve
 
 .PHONY: deploy-platform
-deploy-platform: ## Deploy Cilium eBPF CNI and Longhorn 3x Storage to TARGET cluster
-	@echo "🌐 Deploying Platform Tier (Cilium eBPF + Longhorn Storage) for $(TARGET)..."
-	@export KUBECONFIG="$(CURDIR)/infra/environments/$(TARGET)/kubeconfig"; \
-	helm repo add cilium https://helm.cilium.io/ --force-update; \
-	helm repo add longhorn https://charts.longhorn.io --force-update; \
-	helm upgrade --install cilium cilium/cilium \
-		--version 1.16.3 \
-		--namespace kube-system \
-		-f platform/cni/cilium/values.yaml \
-		--wait --timeout 5m; \
-	kubectl apply -f platform/storage/longhorn/namespace.yaml; \
-	helm upgrade --install longhorn longhorn/longhorn \
-		--version 1.7.2 \
-		--namespace longhorn-system \
-		-f platform/storage/longhorn/values.yaml \
-		--wait --timeout 10m
+deploy-platform: ## Deploy platform tier services (Cilium/Longhorn for local-kvm, AWS LBC/EBS CSI for aws)
+	@if [ "$(TARGET)" = "local-kvm" ]; then \
+		echo "🌐 Deploying Platform Tier (Cilium eBPF + Longhorn Storage) for local-kvm..."; \
+		export KUBECONFIG="$(CURDIR)/infra/environments/local-kvm/kubeconfig"; \
+		helm repo add cilium https://helm.cilium.io/ --force-update; \
+		helm repo add longhorn https://charts.longhorn.io --force-update; \
+		helm upgrade --install cilium cilium/cilium \
+			--version 1.16.3 \
+			--namespace kube-system \
+			-f platform/cni/cilium/values.yaml \
+			--wait --timeout 5m; \
+		kubectl apply -f platform/storage/longhorn/namespace.yaml; \
+		helm upgrade --install longhorn longhorn/longhorn \
+			--version 1.7.2 \
+			--namespace longhorn-system \
+			-f platform/storage/longhorn/values.yaml \
+			--wait --timeout 10m; \
+	elif [ "$(TARGET)" = "aws" ]; then \
+		echo "🌐 Deploying Platform Tier (AWS Load Balancer Controller + gp3 StorageClass) for aws..."; \
+		aws eks update-kubeconfig --name enterprise-ha-eks --region us-east-2 --kubeconfig "$(CURDIR)/infra/environments/aws/kubeconfig"; \
+		export KUBECONFIG="$(CURDIR)/infra/environments/aws/kubeconfig"; \
+		kubectl apply -f platform/storage/ebs-csi/storageclass.yaml; \
+		helm repo add eks https://aws.github.io/eks-charts --force-update; \
+		helm upgrade --install aws-load-balancer-controller eks/aws-load-balancer-controller \
+			--namespace kube-system \
+			-f platform/ingress/aws-lbc/values.yaml \
+			--wait --timeout 5m; \
+	else \
+		echo "❌ Unsupported target for platform deployment: $(TARGET)"; exit 1; \
+	fi
 
 .PHONY: destroy
 destroy: ## Destroy infrastructure for TARGET (e.g. make destroy TARGET=aws|gcp|local-kvm)

@@ -1,0 +1,29 @@
+# Helm values for AWS Load Balancer Controller (EKS Ingress & Service Routing)
+clusterName: enterprise-ha-eks
+region: us-east-2
+
+serviceAccount:
+  create: true
+  name: aws-load-balancer-controller
+  annotations: {}
+
+# High Availability deployment configuration
+replicaCount: 2
+
+# Topology spread across Multi-AZ worker nodes
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: topology.kubernetes.io/zone
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: aws-load-balancer-controller
+
+# Resource requests & limits optimized for ephemeral testbeds
+resources:
+  limits:
+    cpu: 200m
+    memory: 500Mi
+  requests:
+    cpu: 100m
+    memory: 200Mi
