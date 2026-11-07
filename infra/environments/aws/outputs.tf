@@ -74,3 +74,42 @@ output "node_ssh_secret_arn" {
   description = "ARN of the AWS Secrets Manager secret storing the private SSH key"
   value       = module.aws_eks.node_ssh_secret_arn
 }
+
+# -----------------------------------------------------------------------------
+# Node Group & Addon Outputs (Milestone 2.2)
+# -----------------------------------------------------------------------------
+
+output "node_group_id" {
+  description = "ID of the EKS Spot Node Group"
+  value       = module.aws_eks.node_group_id
+}
+
+output "node_group_arn" {
+  description = "ARN of the EKS Spot Node Group"
+  value       = module.aws_eks.node_group_arn
+}
+
+output "node_group_status" {
+  description = "Status of the EKS Spot Node Group"
+  value       = module.aws_eks.node_group_status
+}
+
+output "addon_vpc_cni_arn" {
+  description = "ARN of the vpc-cni addon"
+  value       = module.aws_eks.addon_vpc_cni_arn
+}
+
+output "addon_coredns_arn" {
+  description = "ARN of the coredns addon"
+  value       = module.aws_eks.addon_coredns_arn
+}
+
+output "addon_kube_proxy_arn" {
+  description = "ARN of the kube-proxy addon"
+  value       = module.aws_eks.addon_kube_proxy_arn
+}
+
+output "addon_pod_identity_agent_arn" {
+  description = "ARN of the eks-pod-identity-agent addon"
+  value       = module.aws_eks.addon_pod_identity_agent_arn
+}

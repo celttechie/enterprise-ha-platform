@@ -71,3 +71,49 @@ variable "tags" {
   default     = {}
   description = "Additional tags to apply to all resources"
 }
+
+# -----------------------------------------------------------------------------
+# Node Group & Addon Configuration (Milestone 2.2)
+# -----------------------------------------------------------------------------
+
+variable "node_instance_types" {
+  type        = list(string)
+  default     = ["t3.medium", "t3a.medium"]
+  description = "Diversified instance types for Spot node allocation (fall back if capacity constrained)"
+}
+
+variable "node_capacity_type" {
+  type        = string
+  default     = "SPOT"
+  description = "EC2 capacity allocation strategy: SPOT (70% savings) or ON_DEMAND"
+}
+
+variable "node_desired_size" {
+  type        = number
+  default     = 2
+  description = "Initial desired worker node count"
+}
+
+variable "node_min_size" {
+  type        = number
+  default     = 1
+  description = "Minimum worker node count"
+}
+
+variable "node_max_size" {
+  type        = number
+  default     = 4
+  description = "Maximum worker node count"
+}
+
+variable "node_disk_size" {
+  type        = number
+  default     = 20
+  description = "Root EBS disk size in GiB for worker node instances"
+}
+
+variable "enable_pod_identity_agent" {
+  type        = bool
+  default     = true
+  description = "Enable modern AWS EKS Pod Identity Agent managed addon"
+}

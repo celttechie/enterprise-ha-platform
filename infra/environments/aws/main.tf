@@ -39,5 +39,9 @@ module "aws_eks" {
   kubernetes_version    = var.kubernetes_version
   single_nat_gateway    = var.single_nat_gateway
   enable_kms_encryption = var.enable_kms_encryption
+  node_instance_types   = var.node_instance_types
+  node_desired_size     = var.node_desired_size
+  node_min_size         = var.node_min_size
+  node_max_size         = var.node_max_size
   tags                  = var.tags
 }
