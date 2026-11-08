@@ -70,8 +70,10 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "docs/milestones/milestone-2.1-aws-eks-module.md",
             "docs/milestones/milestone-2.2-aws-eks-spot-nodegroup.md",
             "docs/milestones/milestone-2.3-aws-lbc-and-ebs-csi.md",
+            "docs/milestones/milestone-2.4-cost-guardrails-and-budgets.md",
             "docs/security/security-model.md",
             "docs/operations/demonstration-runbook.md",
+            "scripts/cloud-guardrails/auto-teardown.sh",
             "infra/modules/kvm-cluster/main.tf",
             "infra/modules/kvm-cluster/variables.tf",
             "infra/modules/kvm-cluster/outputs.tf",
@@ -85,6 +87,7 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "infra/modules/aws-eks/addons.tf",
             "infra/modules/aws-eks/ebs_csi.tf",
             "infra/modules/aws-eks/lbc_iam.tf",
+            "infra/modules/aws-eks/budget.tf",
             "infra/modules/aws-eks/outputs.tf",
             "infra/environments/local-kvm/main.tf",
             "infra/environments/local-kvm/talos.tf",
@@ -113,6 +116,12 @@ class TestPlatformTemplateSanity(unittest.TestCase):
         res = subprocess.run([doctor_path], capture_output=True, text=True)
         self.assertEqual(res.returncode, 0, f"doctor.py failed with output:\n{res.stdout}\n{res.stderr}")
         self.assertIn("PLATFORM REPOSITORY PRE-FLIGHT AUDITOR", res.stdout)
+
+    def test_auto_teardown_script_execution(self):
+        teardown_path = os.path.join(REPO_ROOT, "scripts", "cloud-guardrails", "auto-teardown.sh")
+        res = subprocess.run([teardown_path, "--help"], capture_output=True, text=True)
+        self.assertEqual(res.returncode, 0, f"auto-teardown.sh --help failed:\n{res.stdout}\n{res.stderr}")
+        self.assertIn("Usage: auto-teardown.sh", res.stdout)
 
     def test_local_kvm_opentofu_validation(self):
         if not shutil.which("tofu") and not shutil.which("terraform"):

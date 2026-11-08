@@ -19,3 +19,8 @@ tags = {
   Owner       = "Platform-Engineering"
   CostCenter  = "Engineering-Testbeds"
 }
+
+# Cost Guardrail & Budget Configuration (Milestone 2.4)
+enable_budget_alarm        = true
+budget_monthly_limit       = "5.00"
+budget_notification_emails = ["platform-alerts@example.com"]

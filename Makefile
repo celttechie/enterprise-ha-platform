@@ -146,6 +146,16 @@ destroy: ## Destroy infrastructure for TARGET (e.g. make destroy TARGET=aws|gcp|
 	fi
 	@cd infra/environments/$(TARGET) && tofu destroy -auto-approve || true
 
+.PHONY: guardrail-check
+guardrail-check: ## Audit active cloud resources and budget status (ADR-0003 cost guardrail)
+	@echo "🛡️ Auditing cloud resources and spend guardrails..."
+	@bash scripts/cloud-guardrails/auto-teardown.sh --audit
+
+.PHONY: budget
+budget: ## Inspect active AWS budget spend and alert thresholds
+	@echo "💰 Querying AWS Budget status..."
+	@bash scripts/cloud-guardrails/auto-teardown.sh --audit
+
 .PHONY: chaos-cp
 chaos-cp: ## Execute Milestone 1.4 Control Plane HA Quorum & VIP Failover Chaos Drill
 	@echo "⚡ Executing Control Plane HA Quorum Chaos Drill..."
