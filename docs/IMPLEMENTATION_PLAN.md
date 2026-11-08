@@ -28,7 +28,7 @@ Demonstrate enterprise High Availability, event-driven horizontal scalability, a
 - [x] **M2.1**: Define OpenTofu module `infra/modules/aws-eks` (Multi-AZ VPC with single shared NAT Gateway [ADR-0008], KMS envelope encryption, keyless SSM, and EKS Cluster).
 - [x] **M2.2**: Configure Spot NodeGroup (`t3.medium` / `t3a.medium`) with AWS Pod Identity / IRSA and EKS Addons.
 - [x] **M2.3**: Deploy AWS Load Balancer Controller (ALB/NLB) and EBS CSI Driver with Pod Identity.
-- [ ] **M2.4**: Implement automated teardown safeguards and AWS Budget alarms ($5.00 limit).
+- [x] **M2.4**: Implement automated teardown safeguards and AWS Budget alarms ($5.00 limit).
 
 ### Phase 3: Ephemeral GCP GKE Module (Parity & Free Tier)
 - [ ] **M3.1**: Define OpenTofu module `infra/modules/gcp-gke` (VPC and Zonal GKE Cluster for $0 management fee).

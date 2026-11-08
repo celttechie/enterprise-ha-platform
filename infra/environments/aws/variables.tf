@@ -71,3 +71,25 @@ variable "node_max_size" {
   default     = 4
   description = "Maximum worker node count"
 }
+
+# -----------------------------------------------------------------------------
+# Cost Guardrail & Budget Configuration (Milestone 2.4)
+# -----------------------------------------------------------------------------
+
+variable "enable_budget_alarm" {
+  type        = bool
+  default     = true
+  description = "Enable proactive AWS Budgets alarm to prevent cost overruns"
+}
+
+variable "budget_monthly_limit" {
+  type        = string
+  default     = "5.00"
+  description = "Monthly budget limit in USD (ADR-0003 cost guardrail)"
+}
+
+variable "budget_notification_emails" {
+  type        = list(string)
+  default     = ["platform-alerts@example.com"]
+  description = "List of email addresses to notify when budget thresholds are breached"
+}

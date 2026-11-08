@@ -132,3 +132,17 @@ output "lbc_role_arn" {
   description = "ARN of the IAM role for AWS Load Balancer Controller"
   value       = aws_iam_role.aws_lbc.arn
 }
+
+# -----------------------------------------------------------------------------
+# Cost Guardrail & Budget Outputs (Milestone 2.4)
+# -----------------------------------------------------------------------------
+
+output "budget_name" {
+  description = "Name of the AWS budget cost guardrail"
+  value       = try(aws_budgets_budget.cost_guardrail[0].name, null)
+}
+
+output "budget_limit_amount" {
+  description = "Monthly spend limit for the cluster in USD"
+  value       = try(aws_budgets_budget.cost_guardrail[0].limit_amount, null)
+}
