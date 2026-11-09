@@ -32,5 +32,10 @@ module "gcp_gke" {
   release_channel          = var.release_channel
   enable_workload_identity = var.enable_workload_identity
   deletion_protection      = var.deletion_protection
+  node_machine_type        = var.node_machine_type
+  node_desired_size        = var.node_desired_size
+  node_min_size            = var.node_min_size
+  node_max_size            = var.node_max_size
+  node_disk_size_gb        = var.node_disk_size_gb
   labels                   = var.labels
 }

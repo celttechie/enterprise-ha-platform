@@ -18,3 +18,10 @@ labels = {
   owner       = "platform-engineering"
   costcenter  = "engineering-testbeds"
 }
+
+# Worker Node Spot Configuration (Milestone 3.2)
+node_machine_type = "e2-medium"
+node_desired_size = 2
+node_min_size     = 1
+node_max_size     = 4
+node_disk_size_gb = 30

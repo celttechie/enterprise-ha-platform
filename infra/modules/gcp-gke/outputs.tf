@@ -55,3 +55,22 @@ output "service_range_name" {
   description = "Name of the secondary IP range for Services"
   value       = var.service_range_name
 }
+
+# -----------------------------------------------------------------------------
+# Node Pool & Node IAM Outputs (Milestone 3.2)
+# -----------------------------------------------------------------------------
+
+output "node_pool_id" {
+  description = "Unique resource identifier for the Spot NodePool"
+  value       = google_container_node_pool.spot_nodes.id
+}
+
+output "node_pool_name" {
+  description = "Name of the Spot NodePool"
+  value       = google_container_node_pool.spot_nodes.name
+}
+
+output "node_service_account_email" {
+  description = "Email address of the dedicated worker node service account"
+  value       = google_service_account.gke_nodes.email
+}
