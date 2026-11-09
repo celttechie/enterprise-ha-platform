@@ -1,0 +1,20 @@
+# Example OpenTofu Variables for GCP Ephemeral GKE Environment
+
+gcp_project_id           = "your-gcp-project-id"
+gcp_region               = "us-central1"
+gcp_zone                 = "us-central1-a"
+cluster_name             = "enterprise-ha-gke"
+network_name             = "enterprise-ha-gke-vpc"
+subnetwork_name          = "enterprise-ha-gke-subnet"
+primary_ip_cidr_range    = "10.10.0.0/20"
+pod_ip_cidr_range        = "10.20.0.0/16"
+service_ip_cidr_range    = "10.30.0.0/20"
+release_channel          = "REGULAR"
+enable_workload_identity = true
+deletion_protection      = false
+
+labels = {
+  environment = "ephemeral-demo"
+  owner       = "platform-engineering"
+  costcenter  = "engineering-testbeds"
+}

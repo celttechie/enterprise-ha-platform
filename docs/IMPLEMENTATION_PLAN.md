@@ -31,7 +31,7 @@ Demonstrate enterprise High Availability, event-driven horizontal scalability, a
 - [x] **M2.4**: Implement automated teardown safeguards and AWS Budget alarms ($5.00 limit).
 
 ### Phase 3: Ephemeral GCP GKE Module (Parity & Free Tier)
-- [ ] **M3.1**: Define OpenTofu module `infra/modules/gcp-gke` (VPC and Zonal GKE Cluster for $0 management fee).
+- [x] **M3.1**: Define OpenTofu module `infra/modules/gcp-gke` (VPC and Zonal GKE Cluster for $0 management fee).
 - [ ] **M3.2**: Configure Spot NodePool with Google Cloud Workload Identity Federation.
 - [ ] **M3.3**: Configure GKE Gateway API and GCP Compute Persistent Disk CSI Driver.
 
