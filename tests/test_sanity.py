@@ -71,6 +71,7 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "docs/milestones/milestone-2.2-aws-eks-spot-nodegroup.md",
             "docs/milestones/milestone-2.3-aws-lbc-and-ebs-csi.md",
             "docs/milestones/milestone-2.4-cost-guardrails-and-budgets.md",
+            "docs/milestones/milestone-3.1-gcp-gke-cluster.md",
             "docs/security/security-model.md",
             "docs/operations/demonstration-runbook.md",
             "scripts/cloud-guardrails/auto-teardown.sh",
@@ -89,6 +90,10 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "infra/modules/aws-eks/lbc_iam.tf",
             "infra/modules/aws-eks/budget.tf",
             "infra/modules/aws-eks/outputs.tf",
+            "infra/modules/gcp-gke/variables.tf",
+            "infra/modules/gcp-gke/vpc.tf",
+            "infra/modules/gcp-gke/cluster.tf",
+            "infra/modules/gcp-gke/outputs.tf",
             "infra/environments/local-kvm/main.tf",
             "infra/environments/local-kvm/talos.tf",
             "infra/environments/local-kvm/variables.tf",
@@ -99,6 +104,10 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             "infra/environments/aws/variables.tf",
             "infra/environments/aws/outputs.tf",
             "infra/environments/aws/terraform.tfvars.example",
+            "infra/environments/gcp/main.tf",
+            "infra/environments/gcp/variables.tf",
+            "infra/environments/gcp/outputs.tf",
+            "infra/environments/gcp/terraform.tfvars.example",
             "platform/cni/cilium/values.yaml",
             "platform/storage/longhorn/namespace.yaml",
             "platform/storage/longhorn/values.yaml",
@@ -138,6 +147,16 @@ class TestPlatformTemplateSanity(unittest.TestCase):
             self.skipTest("Neither tofu nor terraform is installed")
         cmd = "tofu" if shutil.which("tofu") else "terraform"
         env_dir = os.path.join(REPO_ROOT, "infra", "environments", "aws")
+        init_res = subprocess.run([cmd, "init", "-backend=false"], cwd=env_dir, capture_output=True, text=True)
+        self.assertEqual(init_res.returncode, 0, f"{cmd} init failed:\n{init_res.stderr}\n{init_res.stdout}")
+        val_res = subprocess.run([cmd, "validate"], cwd=env_dir, capture_output=True, text=True)
+        self.assertEqual(val_res.returncode, 0, f"{cmd} validate failed:\n{val_res.stderr}\n{val_res.stdout}")
+
+    def test_gcp_gke_opentofu_validation(self):
+        if not shutil.which("tofu") and not shutil.which("terraform"):
+            self.skipTest("Neither tofu nor terraform is installed")
+        cmd = "tofu" if shutil.which("tofu") else "terraform"
+        env_dir = os.path.join(REPO_ROOT, "infra", "environments", "gcp")
         init_res = subprocess.run([cmd, "init", "-backend=false"], cwd=env_dir, capture_output=True, text=True)
         self.assertEqual(init_res.returncode, 0, f"{cmd} init failed:\n{init_res.stderr}\n{init_res.stdout}")
         val_res = subprocess.run([cmd, "validate"], cwd=env_dir, capture_output=True, text=True)
