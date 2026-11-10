@@ -88,3 +88,37 @@ variable "labels" {
   default     = {}
   description = "Resource labels applied to GCP resources"
 }
+
+# -----------------------------------------------------------------------------
+# Spot NodePool Configuration (Milestone 3.2)
+# -----------------------------------------------------------------------------
+
+variable "node_machine_type" {
+  type        = string
+  default     = "e2-medium"
+  description = "Compute Engine machine type for worker nodes (e2-medium: 2 vCPU, 4GB RAM)"
+}
+
+variable "node_desired_size" {
+  type        = number
+  default     = 2
+  description = "Initial desired worker node count"
+}
+
+variable "node_min_size" {
+  type        = number
+  default     = 1
+  description = "Minimum worker node count for autoscaling"
+}
+
+variable "node_max_size" {
+  type        = number
+  default     = 4
+  description = "Maximum worker node count for autoscaling"
+}
+
+variable "node_disk_size_gb" {
+  type        = number
+  default     = 30
+  description = "Root disk size in GB for each worker node"
+}
